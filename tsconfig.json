@@ -10,14 +10,9 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"baseUrl": ".",
 		"allowJs": true,
 		"checkJs": true,
 		"types": ["vitest"],
-		"paths": {
-			"$lib": ["src/lib"],
-			"$lib/*": ["src/lib/*"]
-		},
 		"outDir": "build"
 	},
 	"include": ["src/**/*"],

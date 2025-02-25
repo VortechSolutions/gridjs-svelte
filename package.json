@@ -3,9 +3,16 @@
 	"type": "module",
 	"version": "2.1.0",
 	"description": "A Svelte wrapper component for Grid.js",
+	"exports": {
+		"import": "./dist/gridjs-svelte.es.js",
+		"require": "./dist/gridjs-svelte.umd.js",
+		"default": "./dist/gridjs-svelte.es.js"
+	},
+	"main": "./dist/gridjs-svelte.umd.js",
+	"module": "./dist/gridjs-svelte.es.js",
+	"types": "./dist/index.d.ts",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
 		"test": "vitest run",
 		"test:watch": "vitest watch",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
@@ -20,12 +27,10 @@
 	"author": "Muhammad Yusuf <yusuf@iamyuu.dev>",
 	"license": "MIT",
 	"peerDependencies": {
-		"gridjs": ">=5.0.0",
-		"svelte": ">=3.30.0"
+		"svelte": ">=5.0.0",
+		"gridjs": ">=5.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "^3.0.6",
-		"@sveltejs/kit": "2.5.27",
 		"@sveltejs/vite-plugin-svelte": "4.0.0",
 		"@testing-library/jest-dom": "6.6.3",
 		"@testing-library/svelte": "5.2.7",
