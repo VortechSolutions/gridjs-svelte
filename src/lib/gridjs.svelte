@@ -1,24 +1,55 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher } from "svelte";
+	import { onMount } from "svelte";
 	import { Grid } from "gridjs";
-	import type { UserConfig } from "gridjs";
+	import type { Config } from "gridjs";
 
-	export let width: UserConfig["width"] = "100%";
-	export let height: UserConfig["height"] = "auto";
-	export let autoWidth: UserConfig["autoWidth"] = true;
-	export let fixedHeader: UserConfig["fixedHeader"] = false;
-	export let resizable: UserConfig["resizable"] = false;
-	export let from: UserConfig["from"] = undefined;
-	export let language: UserConfig["language"] = undefined;
-	export let search: UserConfig["search"] = false;
-	export let sort: UserConfig["sort"] = false;
-	export let pagination: UserConfig["pagination"] = false;
-	export let server: UserConfig["server"] = undefined;
-	export let columns: UserConfig["columns"] = undefined;
-	export let data: UserConfig["data"] = undefined;
-	export let plugins: UserConfig["plugins"] = undefined;
-	export let style: UserConfig["style"] = {};
-	export let className: UserConfig["className"] = {};
+	interface Props {
+		width?: Config["width"];
+		height?: Config["height"];
+		autoWidth?: Config["autoWidth"];
+		fixedHeader?: Config["fixedHeader"];
+		resizable?: Config["resizable"];
+		from?: Config["from"];
+		language?: Config["language"];
+		search?: Config["search"];
+		sort?: Config["sort"];
+		pagination?: Config["pagination"];
+		server?: Config["server"];
+		columns?: Config["columns"];
+		data?: Config["data"];
+		plugins?: Config["plugins"];
+		style?: Config["style"];
+		className?: Config["className"];
+		onload?: (event: CustomEvent) => void;
+		onready?: (event: CustomEvent) => void;
+		onbeforeLoad: (event: CustomEvent) => void;
+		oncellClick: (event: CustomEvent) => void;
+		onrowClick: (event: CustomEvent) => void;
+	}
+
+	let {
+		width = "100%",
+		height = "auto",
+		autoWidth = true,
+		fixedHeader = false,
+		resizable = false,
+		from = undefined,
+		language = undefined,
+		search = false,
+		sort = false,
+		pagination = false,
+		server = undefined,
+		columns = undefined,
+		data = undefined,
+		plugins = undefined,
+		style = {},
+		className = {},
+		onload = () => {},
+		onready = () => {},
+		onbeforeLoad = () => {},
+		oncellClick = () => {},
+		onrowClick = () => {},
+	}: Props = $props();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/config.ts
 	export const instance = new Grid({
@@ -40,45 +71,50 @@
 		className,
 	});
 
-	let node: Element;
-	const dispatch = createEventDispatcher();
-
+	let node: Element = $state();
+	const eventTarget = new EventTarget();
+	const dispatch = (type: string, detail?: any) => {
+		eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
+	};
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts
-	instance.on("cellClick", (...args) => dispatch("cellClick", { ...args }));
-	instance.on("rowClick", (...args) => dispatch("rowClick", { ...args }));
+	instance.on("cellClick", (...args) => oncellClick(new CustomEvent("cellClick", { detail: args })));
+	instance.on("rowClick", (...args) => onrowClick(new CustomEvent("rowClick", { detail: args })));
 
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts
-	instance.on("beforeLoad", () => dispatch("beforeLoad"));
-	instance.on("load", data => dispatch("load", { ...data }));
-	instance.on("ready", () => dispatch("ready"));
+	instance.on("beforeLoad", () => onbeforeLoad(new CustomEvent("beforeLoad")));
+	instance.on("load", data => onload(new CustomEvent("load", { detail: data })));
+	instance.on("ready", () => onready(new CustomEvent("ready")));
 
-	$: if (node) {
-		instance
-			.updateConfig({
-				from,
-				data,
-				columns,
-				server,
-				search,
-				sort,
-				pagination,
-				language,
-				width,
-				height,
-				autoWidth,
-				fixedHeader,
-				style,
-				className,
-				resizable,
-			})
-			.forceRender();
-	}
+	$effect.pre(() => {
+		if (node) {
+			instance
+				.updateConfig({
+					from,
+					data,
+					columns,
+					server,
+					search,
+					sort,
+					pagination,
+					language,
+					width,
+					height,
+					autoWidth,
+					fixedHeader,
+					style,
+					className,
+					resizable,
+				})
+				.forceRender();
+		}
+	});
 
 	onMount(() => {
 		if (node) {
 			instance.render(node);
 		}
 	});
+	export { eventTarget };
 </script>
 
-<article bind:this={node} />
+<article bind:this={node}></article>

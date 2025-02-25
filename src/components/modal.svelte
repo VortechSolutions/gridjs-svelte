@@ -1,18 +1,25 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from "svelte";
+	interface Props {
+		header?: import("svelte").Snippet;
+		children?: import("svelte").Snippet;
+		action?: import("svelte").Snippet;
+	}
 
-	let modal;
+	let { header, children, action }: Props = $props();
+
+	let modal = $state();
 
 	const dispatch = createEventDispatcher();
 	const close = () => dispatch("close");
 </script>
 
-<div class="modal-background" on:click={close} />
+<button type="button" class="modal-background" onclick={close} aria-label="Close modal"></button>
 
 <div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
-	<slot name="header" />
-	<slot />
-	<slot name="action" />
+	{@render header?.()}
+	{@render children?.()}
+	{@render action?.()}
 </div>
 
 <style>
