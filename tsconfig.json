@@ -1,20 +1,21 @@
 {
 	"compilerOptions": {
 		"moduleResolution": "node",
-		"module": "es2020",
+		"module": "esnext",
 		"lib": ["es2020", "DOM"],
-		"target": "es2020",
+		"target": "esnext",
 		"isolatedModules": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
 		"allowJs": true,
 		"checkJs": true,
-		"types": ["vitest"],
-		"outDir": "build"
+		"noEmit": true,
+		"types": ["svelte"]
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "build", ".svelte-kit", "svelte.config.js"]
+	"include": ["src/**/*.ts", "src/**/*.svelte"],
+	"exclude": ["node_modules", "dist"]
 }
