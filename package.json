@@ -6,7 +6,8 @@
 	"exports": {
 		"import": "./dist/gridjs-svelte.es.js",
 		"require": "./dist/gridjs-svelte.umd.js",
-		"default": "./dist/gridjs-svelte.es.js"
+		"default": "./dist/gridjs-svelte.es.js",
+		"svelte": "./src/lib/gridjs.svelte"
 	},
 	"main": "./dist/gridjs-svelte.umd.js",
 	"module": "./dist/gridjs-svelte.es.js",
