@@ -11,6 +11,7 @@
 	"main": "./dist/gridjs-svelte.umd.js",
 	"module": "./dist/gridjs-svelte.es.js",
 	"types": "./dist/index.d.ts",
+	"svelte": "./src/lib/gridjs.svelte",
 	"scripts": {
 		"build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
 		"test": "vitest run",
