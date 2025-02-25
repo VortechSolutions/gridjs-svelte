@@ -3,19 +3,10 @@
 	"type": "module",
 	"version": "2.1.0",
 	"description": "A Svelte wrapper component for Grid.js",
-	"exports": {
-		"import": "./dist/gridjs-svelte.es.js",
-		"require": "./dist/gridjs-svelte.umd.js",
-		"default": "./dist/gridjs-svelte.es.js",
-		"svelte": "./src/lib/gridjs.svelte"
-	},
-	"main": "./dist/gridjs-svelte.umd.js",
-	"module": "./dist/gridjs-svelte.es.js",
-	"types": "./dist/index.d.ts",
-	"svelte": "./src/lib/gridjs.svelte",
 	"scripts": {
-		"prepare": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
-		"build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist",
+		"build": "svelte-kit package",
+		"dev:web": "svelte-kit dev",
+		"build:web": "svelte-kit build",
 		"test": "vitest run",
 		"test:watch": "vitest watch",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
