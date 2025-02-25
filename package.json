@@ -1,5 +1,5 @@
 {
-	"name": "gridjs-svelte",
+	"name": "@VortechSolutions/gridjs-svelte",
 	"type": "module",
 	"version": "2.1.0",
 	"description": "A Svelte wrapper component for Grid.js",
@@ -18,7 +18,6 @@
 		"svelte",
 		"gridjs"
 	],
-	"author": "Muhammad Yusuf <yusuf@iamyuu.dev>",
 	"license": "MIT",
 	"peerDependencies": {
 		"gridjs": ">=5.0.0",
@@ -49,10 +48,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/iamyuu/gridjs-svelte"
+		"url": "https://github.com/VortechSolutions/gridjs-svelte.git"
 	},
 	"bugs": {
-		"url": "https://github.com/iamyuu/gridjs-svelte/issues"
+		"url": "https://github.com/VortechSolutions/gridjs-svelte/issues"
 	},
-	"homepage": "https://gridjs.io/docs/integrations/svelte"
+	"homepage": "https://gridjs.io/docs/integrations/svelte",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	}
 }
