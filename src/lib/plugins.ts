@@ -1,29 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { h, createRef as gCreateRef, Component as gComponent } from "gridjs";
+import { mount, unmount } from "svelte";
 import type { Component } from "svelte";
 
 interface SvelteWrapperProps {
-	component: new (options: { target: HTMLElement; props?: Record<string, any> }) => Component;
-	parentProps?: Record<string, any>;
-	parentElement?: string;
-	[key: string]: any;
+	component: Component;
+	props?: Record<string, any>;
 }
 
 export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
-	static defaultProps = {
-		parentElement: "div",
-		parentProps: {},
-	};
-
 	ref = gCreateRef();
-	instance: Component | null = null;
+	instance: ReturnType<typeof mount> | null = null;
 
 	componentDidMount() {
 		this.mountComponent();
 	}
 
 	componentDidUpdate(prevProps: SvelteWrapperProps) {
-		if (this.instance && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+		if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
 			this.destroyComponent();
 			this.mountComponent();
 		}
@@ -34,22 +28,24 @@ export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
 	}
 
 	mountComponent() {
-		const { component: Component, ...props } = this.props;
+		const { component, props = {} } = this.props;
 
-		this.instance = new Component({
-			target: this.ref.current!,
-			props: { ...props },
-		});
+		if (this.ref.current) {
+			this.instance = mount(component, {
+				target: this.ref.current,
+				props,
+			});
+		}
 	}
 
 	destroyComponent() {
 		if (this.instance) {
-			this.ref.current!.innerHTML = "";
+			unmount(this.instance);
 			this.instance = null;
 		}
 	}
 
 	render() {
-		return h(this.props.parentElement || "div", { ...this.props.parentProps, ref: this.ref });
+		return h("div", { ref: this.ref });
 	}
 }
