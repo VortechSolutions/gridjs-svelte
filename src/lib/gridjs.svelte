@@ -20,7 +20,6 @@
 		plugins?: Config["plugins"];
 		style?: Config["style"];
 		className?: Config["className"];
-		instance?: Config["instance"];
 		store?: Config["store"];
 		eventEmitter?: Config["eventEmitter"];
 		plugin?: Config["plugin"];
@@ -55,6 +54,16 @@
 		plugins = undefined,
 		style = {},
 		className = {},
+		store = undefined,
+		eventEmitter = undefined,
+		plugin = undefined,
+		container = undefined,
+		tableRef = undefined,
+		header = undefined,
+		storage = undefined,
+		processingThrottleMs = undefined,
+		pipeline = undefined,
+		translator = undefined,
 		onload = () => {},
 		onready = () => {},
 		onbeforeLoad = () => {},
@@ -80,6 +89,16 @@
 		resizable,
 		style,
 		className,
+		store,
+		eventEmitter,
+		plugin,
+		container,
+		tableRef,
+		header,
+		storage,
+		processingThrottleMs,
+		pipeline,
+		translator,
 	});
 
 	let node: Element = $state();
@@ -112,7 +131,16 @@
 					fixedHeader,
 					style,
 					className,
-					resizable,
+					store,
+					eventEmitter,
+					plugin,
+					container,
+					tableRef,
+					header,
+					storage,
+					processingThrottleMs,
+					pipeline,
+					translator,
 				})
 				.forceRender();
 		}
