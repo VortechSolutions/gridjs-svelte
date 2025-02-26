@@ -20,11 +20,22 @@
 		plugins?: Config["plugins"];
 		style?: Config["style"];
 		className?: Config["className"];
+		instance?: Config["instance"];
+		store?: Config["store"];
+		eventEmitter?: Config["eventEmitter"];
+		plugin?: Config["plugin"];
+		container?: Config["container"];
+		tableRef?: Config["tableRef"];
+		header?: Config["header"];
+		storage?: Config["storage"];
+		processingThrottleMs?: Config["processingThrottleMs"];
+		pipeline?: Config["pipeline"];
+		translator?: Config["translator"];
 		onload?: (event: CustomEvent) => void;
 		onready?: (event: CustomEvent) => void;
-		onbeforeLoad: (event: CustomEvent) => void;
-		oncellClick: (event: CustomEvent) => void;
-		onrowClick: (event: CustomEvent) => void;
+		onbeforeLoad?: (event: CustomEvent) => void;
+		oncellClick?: (event: CustomEvent) => void;
+		onrowClick?: (event: CustomEvent) => void;
 	}
 
 	let {
@@ -73,9 +84,7 @@
 
 	let node: Element = $state();
 	const eventTarget = new EventTarget();
-	const dispatch = (type: string, detail?: any) => {
-		eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
-	};
+
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts
 	instance.on("cellClick", (...args) => oncellClick(new CustomEvent("cellClick", { detail: args })));
 	instance.on("rowClick", (...args) => onrowClick(new CustomEvent("rowClick", { detail: args })));

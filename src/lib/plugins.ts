@@ -1,19 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { h, createRef as gCreateRef, Component as gComponent } from "gridjs";
+import type { Component } from "svelte";
 
 interface SvelteWrapperProps {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	component: any;
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	component: new (options: { target: HTMLElement; props?: Record<string, any> }) => Component;
 	parentProps?: Record<string, any>;
 	parentElement?: string;
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
-}
-
-function isFn(val) {
-	return typeof val === "function";
 }
 
 export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
@@ -23,33 +16,40 @@ export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
 	};
 
 	ref = gCreateRef();
-	instance = null;
+	instance: Component | null = null;
 
 	componentDidMount() {
-		const {
-			component: Component,
-			parentElement: _parentElement,
-			parentProps: _parentProps,
-			plugin: _plugin,
-			...props
-		} = this.props;
-
-		this.instance = new Component({ target: this.ref.current, props });
+		this.mountComponent();
 	}
 
-	componentDidUpdate() {
-		if (isFn(this.instance.set)) {
-			this.instance.set(this.props);
+	componentDidUpdate(prevProps: SvelteWrapperProps) {
+		if (this.instance && JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+			this.destroyComponent();
+			this.mountComponent();
 		}
 	}
 
 	componentWillUnmount() {
-		if (isFn(this.instance.destroy)) {
-			this.instance.destroy();
+		this.destroyComponent();
+	}
+
+	mountComponent() {
+		const { component: Component, ...props } = this.props;
+
+		this.instance = new Component({
+			target: this.ref.current!,
+			props: { ...props },
+		});
+	}
+
+	destroyComponent() {
+		if (this.instance) {
+			this.ref.current!.innerHTML = "";
+			this.instance = null;
 		}
 	}
 
 	render() {
-		return h(this.props.parentElement, { ...this.props.parentProps, ref: this.ref });
+		return h(this.props.parentElement || "div", { ...this.props.parentProps, ref: this.ref });
 	}
 }
