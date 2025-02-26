@@ -46,6 +46,6 @@ export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
 	}
 
 	render() {
-		return h("div", { ref: this.ref });
+		return h("span", { ref: this.ref });
 	}
 }
