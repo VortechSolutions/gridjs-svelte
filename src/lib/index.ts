@@ -1,1 +1,3 @@
-export { default } from "./gridjs.svelte";
+import Grid from "./gridjs.svelte";
+import { SvelteWrapper } from "./plugins";
+export { Grid, SvelteWrapper };
