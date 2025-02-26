@@ -46,6 +46,6 @@ export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
 	}
 
 	render() {
-		return h("span", { style: "display: inline-block; width:100%; height: 100%", ref: this.ref });
+		return h("div", { ref: this.ref });
 	}
 }
