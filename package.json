@@ -1,5 +1,5 @@
 {
-	"name": "@VortechSolutions/gridjs-svelte",
+	"name": "@vortechsolutions/gridjs-svelte",
 	"type": "module",
 	"version": "2.1.1",
 	"description": "A Svelte wrapper component for Grid.js",
@@ -68,5 +68,8 @@
 	"homepage": "https://gridjs.io/docs/integrations/svelte",
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
-	}
+	},
+	"files": [
+		"dist"
+	]
 }
