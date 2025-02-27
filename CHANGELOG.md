@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.0...v2.1.1) (2025-02-27)
+
+
+### Bug Fixes
+
+* svelte 5 integration ([#1](https://github.com/VortechSolutions/gridjs-svelte/issues/1)) ([6aac78a](https://github.com/VortechSolutions/gridjs-svelte/commit/6aac78af2e6807465322360bc59ff8dd7454f742))
+
 ## 2.1.0 (2025-02-27)
 
 ### Features
