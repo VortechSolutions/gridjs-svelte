@@ -1,7 +1,7 @@
 {
 	"name": "@VortechSolutions/gridjs-svelte",
 	"type": "module",
-	"version": "2.1.0",
+	"version": "1.0.0",
 	"description": "A Svelte wrapper component for Grid.js",
 	"scripts": {
 		"build": "svelte-kit package",
