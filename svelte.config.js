@@ -8,10 +8,10 @@ const config = {
 	kit: {
 		adapter: adapter(),
 
-		package: {	
-			dir: "dist",	
-			files: filepath => !/.stories.svelte|.test.ts/g.test(filepath),	
-		},	
+		package: {
+			dir: "dist",
+			files: filepath => !/.stories.svelte|.test.ts/g.test(filepath),
+		},
 	},
 };
 
