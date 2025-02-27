@@ -51,7 +51,7 @@ Any help is always appreciated, so don't hesitate opening one!
 ### Get started (Devs)
 
 ```bash
-git clone https://github.com/iamyuu/gridjs-svelte
+git clone https://github.com/VortechSolutions/gridjs-svelte
 cd gridjs-svelte
 npm install
 npm run dev:web
