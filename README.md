@@ -5,7 +5,7 @@ A Svelte wrapper component for [Grid.js](https://gridjs.io)
 ## Installation
 
 ```bash
-npm install gridjs gridjs-svelte
+npm install gridjs @vortechsolutions/gridjs-svelte
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ Any help is always appreciated, so don't hesitate opening one!
 git clone https://github.com/VortechSolutions/gridjs-svelte
 cd gridjs-svelte
 npm install
-npm run dev:web
+npm run build
 ```
 
 ### Running the tests

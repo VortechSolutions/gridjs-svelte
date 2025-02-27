@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { UserConfig } from "gridjs";
+	import type { Config } from "gridjs";
 	import type { Plugin } from "gridjs/dist/src/plugin";
 	import type { TableEvents } from "gridjs/dist/src/view/table/events";
 	import type Tabular from "gridjs/dist/src/tabular";
@@ -19,12 +19,12 @@
 	};
 
 	// https://gridjs.io/docs/config/className
-	const className: UserConfig["className"] = {
+	const className: Config["className"] = {
 		error: "error",
 	};
 
 	// https://gridjs.io/docs/config/style
-	const style: UserConfig["style"] = {
+	const style: Config["style"] = {
 		table: {
 			width: "100%",
 		},
@@ -36,21 +36,21 @@
 	};
 
 	// https://gridjs.io/docs/config/language
-	const language: UserConfig["language"] = {
+	const language: Config["language"] = {
 		search: {
 			placeholder: "Find people",
 		},
 	};
 
 	// https://gridjs.io/docs/config/server
-	const server: UserConfig["server"] = {
+	const server: Config["server"] = {
 		url: "https://swapi.dev/api/people",
 		total: (data: People) => data.count,
 		then: (data: People) => data.results.map(people => [people.name, people.gender, people.homeworld, people.url]),
 	};
 
 	// https://gridjs.io/docs/config/columns
-	const columns: UserConfig["columns"] = [
+	const columns: Config["columns"] = [
 		"Name",
 		{
 			name: "Gnder",
@@ -90,8 +90,7 @@
 	];
 
 	// https://gridjs.io/docs/config/pagination
-	const pagination: UserConfig["pagination"] = {
-		enabled: true,
+	const pagination: Config["pagination"] = {
 		limit: 10,
 		server: {
 			// https://github.com/grid-js/gridjs/issues/84
@@ -100,8 +99,7 @@
 	};
 
 	// https://gridjs.io/docs/config/search
-	const search: UserConfig["search"] = {
-		enabled: true,
+	const search: Config["search"] = {
 		server: {
 			url: (prev, keyword) => `${prev}?search=${keyword}`,
 		},
@@ -109,33 +107,33 @@
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts#L6
-	function onReady() {
+	function onready() {
 		console.log("🚀 ~ onReady ~ Grid.js is ready");
 	}
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts#L5
-	function onLoad(event: CustomEvent<Tabular>) {
+	function onload(event: CustomEvent<Tabular>) {
 		// @ts-expect-error - (for demo purpose) actually `_length` is private property
 		console.table("🚀 ~ onLoad ~ people count", event.detail._length);
 	}
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts#L4
-	function onBeforeLoad() {
+	function onbeforeLoad() {
 		console.log("🚀 ~ onBeforeLoad ~ fired onBeforeLoad function");
 	}
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts#L6-L11
-	function onCellClick(event: CustomEvent<TableEvents["cellClick"]>) {
+	function oncellClick(event: CustomEvent<TableEvents["cellClick"]>) {
 		const [_e, { data }] = Object.values(event.detail);
 		console.log(`🚀 ~ onCellClick ~ clicked cell:`, data);
 	}
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts#L12
-	function onRowClick(event: CustomEvent<TableEvents["rowClick"]>) {
+	function onrowClick(event: CustomEvent<TableEvents["rowClick"]>) {
 		const [_e, row] = Object.values(event.detail);
 		console.log(`🚀 ~ onRowClick ~ clicked row:`, row.cell(0).data, row.cell(3).data);
 	}
@@ -150,11 +148,11 @@
 	{className}
 	{style}
 	plugins={[headingPlugin]}
-	on:load={onLoad}
-	on:ready={onReady}
-	on:beforeLoad={onBeforeLoad}
-	on:cellClick={onCellClick}
-	on:rowClick={onRowClick}
+	{onload}
+	{onready}
+	{onbeforeLoad}
+	{oncellClick}
+	{onrowClick}
 />
 
 <style global>

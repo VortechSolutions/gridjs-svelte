@@ -21,11 +21,11 @@
 		["Britney", Math.round(Math.random() * 100000)],
 	];
 
-	let config = {
+	let config = $state({
 		sort: true,
 		search: true,
 		pagination: true,
-	};
+	});
 </script>
 
 <fieldset>

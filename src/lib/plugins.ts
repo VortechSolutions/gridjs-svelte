@@ -1,55 +1,51 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { h, createRef as gCreateRef, Component as gComponent } from "gridjs";
+import { mount, unmount } from "svelte";
+import type { Component } from "svelte";
 
 interface SvelteWrapperProps {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	component: any;
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	parentProps?: Record<string, any>;
-	parentElement?: string;
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key: string]: any;
-}
-
-function isFn(val) {
-	return typeof val === "function";
+	component: Component;
+	props?: Record<string, any>;
 }
 
 export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
-	static defaultProps = {
-		parentElement: "div",
-		parentProps: {},
-	};
-
 	ref = gCreateRef();
-	instance = null;
+	instance: ReturnType<typeof mount> | null = null;
 
 	componentDidMount() {
-		const {
-			component: Component,
-			parentElement: _parentElement,
-			parentProps: _parentProps,
-			plugin: _plugin,
-			...props
-		} = this.props;
-
-		this.instance = new Component({ target: this.ref.current, props });
+		this.mountComponent();
 	}
 
-	componentDidUpdate() {
-		if (isFn(this.instance.set)) {
-			this.instance.set(this.props);
+	componentDidUpdate(prevProps: SvelteWrapperProps) {
+		if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+			this.destroyComponent();
+			this.mountComponent();
 		}
 	}
 
 	componentWillUnmount() {
-		if (isFn(this.instance.destroy)) {
-			this.instance.destroy();
+		this.destroyComponent();
+	}
+
+	mountComponent() {
+		const { component, props = {} } = this.props;
+
+		if (this.ref.current) {
+			this.instance = mount(component, {
+				target: this.ref.current,
+				props,
+			});
+		}
+	}
+
+	destroyComponent() {
+		if (this.instance) {
+			unmount(this.instance);
+			this.instance = null;
 		}
 	}
 
 	render() {
-		return h(this.props.parentElement, { ...this.props.parentProps, ref: this.ref });
+		return h("div", { ref: this.ref });
 	}
 }

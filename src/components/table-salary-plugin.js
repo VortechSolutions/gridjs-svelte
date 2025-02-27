@@ -1,7 +1,7 @@
-import { PluginPosition, BaseComponent, h } from "gridjs";
+import { PluginPosition, Component, h } from "gridjs";
 
 // https://gridjs.io/docs/plugins/writing-plugin
-class TotalSalaryPlugin extends BaseComponent {
+class TotalSalaryPlugin extends Component {
 	constructor(...props) {
 		super(...props);
 
@@ -11,7 +11,7 @@ class TotalSalaryPlugin extends BaseComponent {
 	}
 
 	setTotal() {
-		this.config.pipeline.process().then(data => {
+		this.props.pipeline.process().then(data => {
 			this.setState({
 				total: data.toArray().reduce((prev, row) => prev + row[1], 0),
 			});
@@ -20,7 +20,7 @@ class TotalSalaryPlugin extends BaseComponent {
 
 	componentDidMount() {
 		this.setTotal();
-		this.config.pipeline.on("updated", this.setTotal.bind(this));
+		this.props.pipeline.on("updated", this.setTotal.bind(this));
 	}
 
 	render() {
