@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.1...v2.1.2) (2025-02-27)
+
+
+### Bug Fixes
+
+* [#11](https://github.com/VortechSolutions/gridjs-svelte/issues/11) and package files ([#12](https://github.com/VortechSolutions/gridjs-svelte/issues/12)) ([1c337de](https://github.com/VortechSolutions/gridjs-svelte/commit/1c337de333cb7ca230f726f49b8f96eb81fda351))
+
 ## [2.1.1](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.0...v2.1.1) (2025-02-27)
 
 
