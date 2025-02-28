@@ -22,19 +22,17 @@
 
 <!-- for demo purpose -->
 {#if showModal}
-	<Modal on:close={toggleModal}>
+	<Modal onclose={toggleModal}>
 		{#snippet header()}
-				<h2 >{title}</h2>
-			{/snippet}
+			<h2>{title}</h2>
+		{/snippet}
 
 		<pre>
       {JSON.stringify(cell, null, 2)}
     </pre>
 
 		{#snippet action()}
-			
-				<button onclick={toggleModal}>Ok</button>
-			
-			{/snippet}
+			<button onclick={toggleModal}>Ok</button>
+		{/snippet}
 	</Modal>
 {/if}

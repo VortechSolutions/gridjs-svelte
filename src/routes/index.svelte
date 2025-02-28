@@ -6,12 +6,13 @@
 	import type { People } from "../types/people";
 
 	import { h, PluginPosition } from "gridjs";
-	import Grid from "$lib/gridjs.svelte";
+	import Grid from "../lib/gridjs.svelte";
 	import Planet from "../components/planet.svelte";
-	import { SvelteWrapper } from "$lib/plugins";
+	import { SvelteWrapper } from "../lib/plugins";
 	import { Gender } from "../types/people";
 
 	// https://gridjs.io/docs/plugins/basics
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const headingPlugin: Plugin<any> = {
 		id: "heading",
 		position: PluginPosition.Header,
@@ -76,7 +77,7 @@
 		{
 			name: "Action",
 			width: "10%",
-			formatter: (cell, _row) => {
+			formatter: cell => {
 				return h(
 					"button",
 					{
@@ -128,14 +129,14 @@
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts#L6-L11
 	function oncellClick(event: CustomEvent<TableEvents["cellClick"]>) {
 		const [_e, { data }] = Object.values(event.detail);
-		console.log(`🚀 ~ onCellClick ~ clicked cell:`, data);
+		console.log(`🚀 ~ onCellClick ~ clicked cell:`, _e, data);
 	}
 
 	// https://gridjs.io/docs/examples/event-handler
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts#L12
 	function onrowClick(event: CustomEvent<TableEvents["rowClick"]>) {
 		const [_e, row] = Object.values(event.detail);
-		console.log(`🚀 ~ onRowClick ~ clicked row:`, row.cell(0).data, row.cell(3).data);
+		console.log(`🚀 ~ onRowClick ~ clicked row:`, _e, row.cell(0).data, row.cell(3).data);
 	}
 </script>
 
@@ -158,12 +159,12 @@
 <style global>
 	@import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
 
-	:root {
+	:global(:root) {
 		--primary-color: #ffe300;
 		--error-color: red;
 	}
 
-	.btn {
+	:global(.btn) {
 		background-color: var(--primary-color);
 		padding: 0.5rem 1rem;
 		border-width: 0;
@@ -171,7 +172,7 @@
 		cursor: pointer;
 	}
 
-	.error {
+	:global(.error) {
 		color: var(--error-color);
 	}
 </style>

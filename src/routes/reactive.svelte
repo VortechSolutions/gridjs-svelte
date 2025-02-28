@@ -1,5 +1,5 @@
 <script>
-	import Grid from "$lib/gridjs.svelte";
+	import Grid from "../lib/gridjs.svelte";
 	import salaryPlugin from "../components/table-salary-plugin.js";
 
 	const columns = ["Name", "Salary"];
