@@ -24,7 +24,6 @@
 	let config = $state({
 		sort: true,
 		search: true,
-		pagination: true,
 	});
 </script>
 

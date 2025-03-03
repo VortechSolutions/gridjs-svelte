@@ -1,75 +1,23 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount, createEventDispatcher } from "svelte";
 	import { Grid } from "gridjs";
-	import type { Config } from "gridjs";
 
-	interface Props {
-		width?: Config["width"];
-		height?: Config["height"];
-		autoWidth?: Config["autoWidth"];
-		fixedHeader?: Config["fixedHeader"];
-		resizable?: Config["resizable"];
-		from?: Config["from"];
-		language?: Config["language"];
-		search?: Config["search"];
-		sort?: Config["sort"];
-		pagination?: Config["pagination"];
-		server?: Config["server"];
-		columns?: Config["columns"];
-		data?: Config["data"];
-		plugins?: Config["plugins"];
-		style?: Config["style"];
-		className?: Config["className"];
-		store?: Config["store"];
-		eventEmitter?: Config["eventEmitter"];
-		plugin?: Config["plugin"];
-		container?: Config["container"];
-		tableRef?: Config["tableRef"];
-		header?: Config["header"];
-		storage?: Config["storage"];
-		processingThrottleMs?: Config["processingThrottleMs"];
-		pipeline?: Config["pipeline"];
-		translator?: Config["translator"];
-		onload?: (event: CustomEvent) => void;
-		onready?: (event: CustomEvent) => void;
-		onbeforeLoad?: (event: CustomEvent) => void;
-		oncellClick?: (event: CustomEvent) => void;
-		onrowClick?: (event: CustomEvent) => void;
-	}
-
-	let {
-		width = "100%",
-		height = "auto",
-		autoWidth = true,
-		fixedHeader = false,
-		resizable = false,
-		from = undefined,
-		language = undefined,
-		search = false,
-		sort = false,
-		pagination = false,
-		server = undefined,
-		columns = undefined,
-		data = undefined,
-		plugins = undefined,
-		style = {},
-		className = {},
-		store = undefined,
-		eventEmitter = undefined,
-		plugin = undefined,
-		container = undefined,
-		tableRef = undefined,
-		header = undefined,
-		storage = undefined,
-		processingThrottleMs = undefined,
-		pipeline = undefined,
-		translator = undefined,
-		onload = () => {},
-		onready = () => {},
-		onbeforeLoad = () => {},
-		oncellClick = () => {},
-		onrowClick = () => {},
-	}: Props = $props();
+	export let width = "100%";
+	export let height = "auto";
+	export let autoWidth = true;
+	export let fixedHeader = false;
+	export let resizable = false;
+	export let from = undefined;
+	export let language = undefined;
+	export let search = false;
+	export let sort = false;
+	export let pagination = false;
+	export let server = undefined;
+	export let columns = undefined;
+	export let data = undefined;
+	export let plugins = undefined;
+	export let style = {};
+	export let className = {};
 
 	// https://github.com/grid-js/gridjs/blob/master/src/config.ts
 	export const instance = new Grid({
@@ -89,69 +37,47 @@
 		resizable,
 		style,
 		className,
-		store,
-		eventEmitter,
-		plugin,
-		container,
-		tableRef,
-		header,
-		storage,
-		processingThrottleMs,
-		pipeline,
-		translator,
 	});
 
-	let node: Element = $state();
-	const eventTarget = new EventTarget();
+	let node: Element;
+	const dispatch = createEventDispatcher();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts
-	instance.on("cellClick", (...args) => oncellClick(new CustomEvent("cellClick", { detail: args })));
-	instance.on("rowClick", (...args) => onrowClick(new CustomEvent("rowClick", { detail: args })));
+	instance.on("cellClick", (...args) => dispatch("cellClick", { ...args }));
+	instance.on("rowClick", (...args) => dispatch("rowClick", { ...args }));
 
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts
-	instance.on("beforeLoad", () => onbeforeLoad(new CustomEvent("beforeLoad")));
-	instance.on("load", data => onload(new CustomEvent("load", { detail: data })));
-	instance.on("ready", () => onready(new CustomEvent("ready")));
+	instance.on("beforeLoad", () => dispatch("beforeLoad"));
+	instance.on("load", data => dispatch("load", { ...data }));
+	instance.on("ready", () => dispatch("ready"));
 
-	$effect.pre(() => {
-		if (node) {
-			instance
-				.updateConfig({
-					from,
-					data,
-					columns,
-					server,
-					search,
-					sort,
-					pagination,
-					language,
-					width,
-					height,
-					autoWidth,
-					fixedHeader,
-					style,
-					className,
-					store,
-					eventEmitter,
-					plugin,
-					container,
-					tableRef,
-					header,
-					storage,
-					processingThrottleMs,
-					pipeline,
-					translator,
-				})
-				.forceRender();
-		}
-	});
+	$: if (node) {
+		instance
+			.updateConfig({
+				from,
+				data,
+				columns,
+				server,
+				search,
+				sort,
+				pagination,
+				language,
+				width,
+				height,
+				autoWidth,
+				fixedHeader,
+				style,
+				className,
+				resizable,
+			})
+			.forceRender();
+	}
 
 	onMount(() => {
 		if (node) {
 			instance.render(node);
 		}
 	});
-	export { eventTarget };
 </script>
 
 <article bind:this={node}></article>
