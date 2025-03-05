@@ -1,8 +1,42 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { Grid } from "gridjs";
+	import { Config, Grid } from "gridjs";
 
-	const { 
+	interface Props {
+		width?: Config["width"];
+		height?: Config["height"];
+		autoWidth?: Config["autoWidth"];
+		fixedHeader?: Config["fixedHeader"];
+		resizable?: Config["resizable"];
+		from?: Config["from"];
+		language?: Config["language"];
+		search?: Config["search"];
+		sort?: Config["sort"];
+		pagination?: Config["pagination"];
+		server?: Config["server"];
+		columns?: Config["columns"];
+		data?: Config["data"];
+		plugins?: Config["plugins"];
+		style?: Config["style"];
+		className?: Config["className"];
+		store?: Config["store"];
+		eventEmitter?: Config["eventEmitter"];
+		plugin?: Config["plugin"];
+		container?: Config["container"];
+		tableRef?: Config["tableRef"];
+		header?: Config["header"];
+		storage?: Config["storage"];
+		processingThrottleMs?: Config["processingThrottleMs"];
+		pipeline?: Config["pipeline"];
+		translator?: Config["translator"];
+		onload?: (event: CustomEvent) => void;
+		onready?: (event: CustomEvent) => void;
+		onbeforeLoad?: (event: CustomEvent) => void;
+		oncellClick?: (event: CustomEvent) => void;
+		onrowClick?: (event: CustomEvent) => void;
+	}
+
+	let { 
 		width = "100%", 
 		height = "auto",
 		autoWidth = true,
@@ -18,13 +52,8 @@
 		data,
 		plugins,
 		style = {},
-		className = {},
-		cellClick,
-		rowClick,
-		beforeLoad,
-		load,
-		ready,
-	} = $props();
+		className = {}
+	}: Props = $props();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/config.ts
 	export const instance = new Grid({
