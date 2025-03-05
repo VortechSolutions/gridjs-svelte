@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-	import { Grid } from "gridjs";
-	import type { Config } from "gridjs";
+	import { createEventDispatcher } from "svelte";
+	import { Config, Grid } from "gridjs";
 
 	interface Props {
 		width?: Config["width"];
@@ -37,38 +36,23 @@
 		onrowClick?: (event: CustomEvent) => void;
 	}
 
-	let {
-		width = "100%",
+	let { 
+		width = "100%", 
 		height = "auto",
 		autoWidth = true,
 		fixedHeader = false,
 		resizable = false,
-		from = undefined,
-		language = undefined,
+		from,
+		language,
 		search = false,
 		sort = false,
 		pagination = false,
-		server = undefined,
-		columns = undefined,
-		data = undefined,
-		plugins = undefined,
+		server,
+		columns,
+		data,
+		plugins,
 		style = {},
-		className = {},
-		store = undefined,
-		eventEmitter = undefined,
-		plugin = undefined,
-		container = undefined,
-		tableRef = undefined,
-		header = undefined,
-		storage = undefined,
-		processingThrottleMs = undefined,
-		pipeline = undefined,
-		translator = undefined,
-		onload = () => {},
-		onready = () => {},
-		onbeforeLoad = () => {},
-		oncellClick = () => {},
-		onrowClick = () => {},
+		className = {}
 	}: Props = $props();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/config.ts
@@ -89,69 +73,45 @@
 		resizable,
 		style,
 		className,
-		store,
-		eventEmitter,
-		plugin,
-		container,
-		tableRef,
-		header,
-		storage,
-		processingThrottleMs,
-		pipeline,
-		translator,
 	});
 
-	let node: Element = $state();
-	const eventTarget = new EventTarget();
+	let node: Element;
+
+	const dispatch = createEventDispatcher();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/view/table/events.ts
-	instance.on("cellClick", (...args) => oncellClick(new CustomEvent("cellClick", { detail: args })));
-	instance.on("rowClick", (...args) => onrowClick(new CustomEvent("rowClick", { detail: args })));
-
+	instance.on("cellClick", (...args) => dispatch("cellClick", { ...args }));
+	instance.on("rowClick", (...args) => dispatch("rowClick", { ...args }));
 	// https://github.com/grid-js/gridjs/blob/master/src/view/events.ts
-	instance.on("beforeLoad", () => onbeforeLoad(new CustomEvent("beforeLoad")));
-	instance.on("load", data => onload(new CustomEvent("load", { detail: data })));
-	instance.on("ready", () => onready(new CustomEvent("ready")));
+	instance.on("beforeLoad", () => dispatch("beforeLoad"));
+	instance.on("load", data => dispatch("load", { ...data }));
+	instance.on("ready", () => dispatch("ready"));
 
-	$effect.pre(() => {
-		if (node) {
-			instance
-				.updateConfig({
-					from,
-					data,
-					columns,
-					server,
-					search,
-					sort,
-					pagination,
-					language,
-					width,
-					height,
-					autoWidth,
-					fixedHeader,
-					style,
-					className,
-					store,
-					eventEmitter,
-					plugin,
-					container,
-					tableRef,
-					header,
-					storage,
-					processingThrottleMs,
-					pipeline,
-					translator,
-				})
-				.forceRender();
-		}
-	});
-
-	onMount(() => {
-		if (node) {
+	$effect(() => {
+		const grid = instance.updateConfig({
+			from,
+			data,
+			columns,
+			server,
+			search,
+			sort,
+			pagination,
+			language,
+			width,
+			height,
+			autoWidth,
+			fixedHeader,
+			style,
+			className,
+			resizable,
+		});
+		if (node && node.childNodes.length === 0) {
 			instance.render(node);
 		}
+		if (grid && node.childNodes.length > 0) {
+			grid.forceRender();
+		}
 	});
-	export { eventTarget };
 </script>
 
 <article bind:this={node}></article>
