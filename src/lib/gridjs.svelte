@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { Config, Grid } from "gridjs";
+	import { type Config, Grid } from "gridjs";
 
 	interface Props {
 		width?: Config["width"];
@@ -36,8 +36,8 @@
 		onrowClick?: (event: CustomEvent) => void;
 	}
 
-	let { 
-		width = "100%", 
+	let {
+		width = "100%",
 		height = "auto",
 		autoWidth = true,
 		fixedHeader = false,
@@ -52,7 +52,7 @@
 		data,
 		plugins,
 		style = {},
-		className = {}
+		className = {},
 	}: Props = $props();
 
 	// https://github.com/grid-js/gridjs/blob/master/src/config.ts
