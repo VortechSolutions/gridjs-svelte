@@ -175,7 +175,3 @@ test("should allow for change element and add props to parent wrapper plugin", a
 	expect(screen.getByTestId("wrapper-plugin")).toBeInTheDocument();
 	expect(screen.getByTestId("component-props")).toBeInTheDocument();
 });
-
-function afterEach() {
-	throw new Error("Function not implemented.");
-}
