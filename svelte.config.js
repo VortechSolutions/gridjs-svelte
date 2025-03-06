@@ -13,6 +13,11 @@ const config = {
 			files: filepath => !/.stories.svelte|.test.ts/g.test(filepath),
 		},
 	},
+	alias: {
+		$components: "./src/components",
+		$lib: "./src/lib",
+		$routes: "./src/routes",
+	},
 };
 
 export default config;
