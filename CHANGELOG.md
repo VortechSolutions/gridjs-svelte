@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.2...v2.1.3) (2025-03-05)
+
+
+### Bug Fixes
+
+* gridjs table render ([#18](https://github.com/VortechSolutions/gridjs-svelte/issues/18)) ([3da2bb5](https://github.com/VortechSolutions/gridjs-svelte/commit/3da2bb5067a5a141d5a66c2bd0983b474527c031))
+
 ## [2.1.2](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.1...v2.1.2) (2025-02-27)
 
 

@@ -1,7 +1,7 @@
 {
 	"name": "@vortechsolutions/gridjs-svelte",
 	"type": "module",
-	"version": "2.1.2",
+	"version": "2.1.5",
 	"description": "A Svelte wrapper component for Grid.js",
 	"exports": {
 		".": {
@@ -66,13 +66,14 @@
 		"url": "https://github.com/VortechSolutions/gridjs-svelte/issues"
 	},
 	"homepage": "https://gridjs.io/docs/integrations/svelte",
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
-	},
 	"files": [
 		"dist"
 	],
 	"dependencies": {
 		"typescript-eslint": "^8.25.0"
-	}
+	},
+	"directories": {
+		"test": "tests"
+	},
+	"author": ""
 }
