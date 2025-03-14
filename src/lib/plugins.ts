@@ -6,6 +6,8 @@ import type { Component } from "svelte";
 interface SvelteWrapperProps {
 	component: Component;
 	props?: Record<string, any>;
+	style?: string;
+	class?: string;
 }
 
 export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
@@ -46,6 +48,6 @@ export class SvelteWrapper extends gComponent<SvelteWrapperProps> {
 	}
 
 	render() {
-		return h("div", { ref: this.ref });
+		return h("div", { ref: this.ref, style: this.props.style, class: this.props.class });
 	}
 }
