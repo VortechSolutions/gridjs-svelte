@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.6](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.5...v2.1.6) (2025-03-17)
+
+
+### Miscellaneous Chores
+
+* release 2.1.6 ([39d3e1a](https://github.com/VortechSolutions/gridjs-svelte/commit/39d3e1a33d63ed1ba5a8e78a92a2fc41f9842058))
+
 ## [2.1.5](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.4...v2.1.5) (2025-03-17)
 
 
