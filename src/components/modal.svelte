@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+	import { type Snippet } from "svelte";
 	interface Props {
-		header?: import("svelte").Snippet;
-		children?: import("svelte").Snippet;
-		action?: import("svelte").Snippet;
+		header?: Snippet;
+		children?: Snippet;
+		action?: Snippet;
+		onclose?: () => void;
 	}
 
-	let { header, children, action }: Props = $props();
+	let { header, children, action, onclose }: Props = $props();
 
 	let modal = $state();
 
-	const dispatch = createEventDispatcher();
-	const close = () => dispatch("close");
+	const close = () => {
+		if (onclose) onclose();
+	};
 </script>
 
 <button type="button" class="modal-background" onclick={close} aria-label="Close modal"></button>

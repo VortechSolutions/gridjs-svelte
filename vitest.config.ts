@@ -8,4 +8,5 @@ export default defineConfig({
 		global: true,
 		environment: "jsdom",
 	},
+	setupFiles: ['./vitest-setup.js']
 });

@@ -1,9 +1,10 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom/vitest'
 import { cleanup, render, fireEvent, screen } from "@testing-library/svelte";
 import { h, PluginPosition } from "gridjs";
 import Grid from "../src/lib/gridjs.svelte";
 import { SvelteWrapper } from "../src/lib/plugins";
 import SvelteComponent from "./component.svelte";
+import { afterEach, expect, test, vi } from "vitest";
 
 afterEach(() => cleanup());
 
@@ -175,7 +176,3 @@ test("should allow for change element and add props to parent wrapper plugin", a
 	expect(screen.getByTestId("wrapper-plugin")).toBeInTheDocument();
 	expect(screen.getByTestId("component-props")).toBeInTheDocument();
 });
-
-function afterEach(arg0: () => void) {
-	throw new Error("Function not implemented.");
-}
