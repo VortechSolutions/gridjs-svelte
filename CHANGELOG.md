@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.5](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.4...v2.1.5) (2025-03-17)
+
+
+### Bug Fixes
+
+* fixed lint and check ([#16](https://github.com/VortechSolutions/gridjs-svelte/issues/16)) ([2c32259](https://github.com/VortechSolutions/gridjs-svelte/commit/2c32259c6e2bfcca174187c031d1fc46dc3ca54e))
+
 ## [2.1.4](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.3...v2.1.4) (2025-03-17)
 
 
