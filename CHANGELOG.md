@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.4](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.3...v2.1.4) (2025-03-17)
+
+
+### Bug Fixes
+
+* add class & style options ([#21](https://github.com/VortechSolutions/gridjs-svelte/issues/21)) ([8dc2118](https://github.com/VortechSolutions/gridjs-svelte/commit/8dc2118063a73121600067fd9ee0d1aa32957741))
+
 ## [2.1.3](https://github.com/VortechSolutions/gridjs-svelte/compare/v2.1.2...v2.1.3) (2025-03-05)
 
 
